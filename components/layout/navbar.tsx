@@ -23,10 +23,13 @@ export default function Navbar() {
     },
     {
       label: "PROJECTS",
-      href: "#iconic",
+      href: "/projectcategory",
       hasDropdown: true,
       dropdown: [
         { label: "Iconic Projects", href: "/#iconic" },
+        { label: "Residential Projects", href: "/residentialpage" },
+        { label: "Commercial Projects", href: "/commercialpage" },
+        { label: "Industrial Projects", href: "/industrialpage" },
       ],
     },
     {
@@ -43,11 +46,12 @@ export default function Navbar() {
     },
     {
       label: "JOIN US",
-      href: "/careers",
+      href: "/joinus",
       hasDropdown: true,
       dropdown: [
-        { label: "CAREERS", href: "/careers" },
-        // { label: "PARTNER", href: "/partner" },
+        { label: "Careers", href: "/joinus/#careers" },
+        { label: "Join Ambedessor", href: "/join/#joinambedessor" },
+        { label: "Join as a Team Member", href: "/join/#joinasateammember" },
       ],
     },
     {
@@ -66,77 +70,77 @@ export default function Navbar() {
     <>
       {/* Navbar Desktop */}
       <div>
-      <nav className={`flex items-center justify-evenly px-16 py-3 text-black ${navbarClasses}`}>
-        {/* Logo */}
-        <Link href="/">
-          <div className="w-32 relative h-8 cursor-pointer">
-            <Image
-              src="/tlogo.png"
-              alt="Logo"
-              fill
-              style={{ objectFit: "contain" }}
-              priority
-            />
-          </div>
-        </Link>
+        <nav className={`flex items-center justify-evenly px-16 py-3 text-black ${navbarClasses}`}>
+          {/* Logo */}
+          <Link href="/">
+            <div className="w-32 relative h-8 cursor-pointer">
+              <Image
+                src="/tlogo.png"
+                alt="Logo"
+                fill
+                style={{ objectFit: "contain" }}
+                priority
+              />
+            </div>
+          </Link>
 
-        {/* Desktop Menu */}
-        <div className="hidden md:flex items-center space-x-10 text-md font-semibold">
-          {menuItems.map((item, idx) => (
-            <div key={idx} className="relative group">
-              <div className="flex items-center space-x-1 hover:text-green-500 cursor-pointer">
-                <Link href={item.href}>
-                  {item.label}
-                </Link>
-                {item.hasDropdown && (
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                  </svg>
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center space-x-10 text-md font-semibold">
+            {menuItems.map((item, idx) => (
+              <div key={idx} className="relative group">
+                <div className="flex items-center space-x-1 hover:text-green-500 cursor-pointer">
+                  <Link href={item.href}>
+                    {item.label}
+                  </Link>
+                  {item.hasDropdown && (
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  )}
+                </div>
+
+                {item.hasDropdown && item.dropdown && (
+                  <div className="absolute top-full left-0 mt-4 bg-white shadow-lg z-50 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                    {item.dropdown.map((drop, dropIdx) => (
+                      <div key={drop.href + dropIdx}>
+                        <Link
+                          href={drop.href}
+                          className="block px-4 py-2 hover:bg-gray-100 text-sm text-gray-800"
+                        >
+                          {drop.label}
+                        </Link>
+                        {drop.subDropdown &&
+                          drop.subDropdown.map((sub, subIdx) => (
+                            <Link
+                              key={sub.href + subIdx}
+                              href={sub.href}
+                              className="block pl-8 py-2 hover:bg-gray-100 text-sm text-gray-700"
+                            >
+                              {sub.label}
+                            </Link>
+                          ))}
+                      </div>
+                    ))}
+                  </div>
                 )}
               </div>
+            ))}
+          </div>
 
-              {item.hasDropdown && item.dropdown && (
-                <div className="absolute top-full left-0 mt-4 bg-white shadow-lg z-50 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                  {item.dropdown.map((drop, dropIdx) => (
-                    <div key={drop.href + dropIdx}>
-                      <Link
-                        href={drop.href}
-                        className="block px-4 py-2 hover:bg-gray-100 text-sm text-gray-800"
-                      >
-                        {drop.label}
-                      </Link>
-                      {drop.subDropdown &&
-                        drop.subDropdown.map((sub, subIdx) => (
-                          <Link
-                            key={sub.href + subIdx}
-                            href={sub.href}
-                            className="block pl-8 py-2 hover:bg-gray-100 text-sm text-gray-700"
-                          >
-                            {sub.label}
-                          </Link>
-                        ))}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-
-        {/* Mobile Menu Toggle */}
-        <div
-          onClick={() => setIsOpen(true)}
-          className="text-black text-2xl font-bold cursor-pointer md:hidden"
-        >
-          &#9776;
-        </div>
-      </nav>
+          {/* Mobile Menu Toggle */}
+          <div
+            onClick={() => setIsOpen(true)}
+            className="text-black text-2xl font-bold cursor-pointer md:hidden"
+          >
+            &#9776;
+          </div>
+        </nav>
       </div>
 
       {/* Mobile Menu */}
@@ -204,6 +208,7 @@ export default function Navbar() {
           </div>
         </div>
       )}
+      
     </>
   );
 }
