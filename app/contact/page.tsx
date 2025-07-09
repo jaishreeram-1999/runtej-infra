@@ -34,7 +34,7 @@ function ContactPage() {
              </div>
            </section>
      
-      <section className="container max-w-5xl mx-auto bg-white shadow-lg p-10 rounded-2xl">
+      <section id="queries" className="container max-w-5xl mx-auto bg-white shadow-lg p-10 rounded-2xl">
         <h2 className="text-center text-md text-green-600 font-semibold uppercase tracking-wide mb-2">
           Contact Us
         </h2>
@@ -84,7 +84,7 @@ function ContactPage() {
         <a href="#" className="text-yellow-400 underline text-sm font-semibold hover:text-yellow-500">+91 7986546464</a>
       </section>
 
-      <section className="mt-15 ">
+      <section id="location" className="mt-15 ">
          <div className="w-full h-[450px]">
       <iframe
         className="w-full h-full"

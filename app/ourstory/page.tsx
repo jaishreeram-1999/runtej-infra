@@ -20,10 +20,11 @@ export default function OurStory() {
                     </h1>
                 </div>
             </section>
+            
             <div className="bg-white py-10 px-4 sm:px-6 lg:px-8">
                 <div className="container mx-auto">
 
-                    <h1 className="text-4xl font-bold text-gray-800 mb-6 text-center">Our Story</h1>
+                    {/* <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">Our Story</h1> */}
 
                     <section className="mb-8">
                         <p className="text-lg text-gray-700 leading-relaxed">

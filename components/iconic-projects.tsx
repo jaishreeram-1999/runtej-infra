@@ -31,7 +31,7 @@ function SecondSection() {
 
   return (
 
-    <div ref={containerRef} className="bg-gray-100   ">
+    <div ref={containerRef} id='iconic' className="bg-gray-100" >
       <div className="container mx-auto px-4 py-12">
         <p className="text-green-600 uppercase tracking-widest font-semibold text-xl text-center mb-2">
           Our Pride
