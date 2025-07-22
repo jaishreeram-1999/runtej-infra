@@ -6,6 +6,7 @@ import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
 import { SessionProvider, useSession } from "next-auth/react"; // 🧠 for session
 import type { ReactNode } from "react";
+import { Toaster } from "@/components/ui/sonner";
 
 // Fonts
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <SessionProvider>
           <LayoutContent>{children}</LayoutContent>
+          <Toaster position="bottom-right" richColors closeButton />
         </SessionProvider>
       </body>
     </html>

@@ -3,7 +3,8 @@ import Image from "next/image";
 import { useState } from "react";
 
 export default function CareerPage() {
-  const [formData, setFormData] = useState({
+  // 1️⃣ Make a constant once
+  const initialState = {
     post: "",
     name: "",
     email: "",
@@ -14,7 +15,10 @@ export default function CareerPage() {
     designation: "",
     tenure: "",
     reason: "",
-  });
+  };
+
+  // 2️⃣ Use it to create state
+  const [formData, setFormData] = useState(initialState);
 
   //   const [resumeFile, setResumeFile] = useState<File | null>(null);
 
@@ -31,11 +35,20 @@ export default function CareerPage() {
   //     }
   //   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form Data:", formData);
-    // console.log("Resume File:", resumeFile);
-    alert("Form submitted! Check console for data.");
+    const res = await fetch("/api/careers", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+
+    if (res.ok) {
+      alert("Form submitted!");
+      setFormData(initialState); // reset form if you want
+    } else {
+      alert("Error sending form.");
+    }
   };
 
   return (

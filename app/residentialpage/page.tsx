@@ -5,20 +5,13 @@ import Link from "next/link";
 
 function ResidentialPage() {
   const properties = [
-    { type: "Standalone Houses", img: "/residential/standalone-houses.jpg", count: 12 },
-    { type: "Semi Detached Houses", img: "/residential/semi-detached.jpg", count: 8 },
-    { type: "Multi Family Homes", img: "/residential/multi-family.jpg", count: 15 },
     { type: "Row Houses", img: "/residential/row-houses.jpg", count: 10 },
-    { type: "Apartment Complexes", img: "/residential/apartment-complexes.jpg", count: 20 },
-    { type: "Penthouses", img: "/residential/pent-houses.jpg", count: 5 },
+    { type: "Apartments", img: "/residential/apartment-complexes.jpg", count: 20 },
+    { type: "Duplex", img: "/residential/pent-houses.jpg", count: 5 },
     { type: "Bungalows", img: "/residential/bungalow.jpg", count: 6 },
-    { type: "Villas", img: "/residential/villas.jpg", count: 11 },
-    { type: "Custom Homes", img: "/residential/custum-home.jpg", count: 4 },
     { type: "Farmhouses", img: "/residential/farm-houses.jpg", count: 7 },
-    { type: "Prefabricated Homes", img: "/residential/prefab-house.jpg", count: 3 },
-    { type: "Affordable Housing", img: "/residential/affor-house.jpg", count: 14 },
-    { type: "Eco Friendly Homes", img: "/residential/eco-friendly.jpg", count: 9 },
-    { type: "Colony Development", img: "/residential/colony.jpg", count: 2 },
+    { type: "Societies", img: "/residential/eco-friendly.jpg", count: 9 },
+    { type: "Colonial Development", img: "/residential/colony.jpg", count: 2 },
   ];
 
 

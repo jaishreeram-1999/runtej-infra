@@ -20,6 +20,12 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
+import Counter from '@/components/admin/milestone'
+import TestimonialsPage from '@/components/admin/testinomial'
+import { Quotation } from '@/lib/models/quotation'
+import QuotationPage from '@/components/admin/quotation'
+import GetContact from '@/components/admin/getcontact'
+import ContactPostAdmin from '@/components/admin/postcontact'
 
 export default function Dashboard() {
   const { data: session, status } = useSession()
@@ -47,18 +53,18 @@ export default function Dashboard() {
     switch (activeSection) {
       case 'overview':
         return <DashboardOverview />
+        case 'counter':
+        return <Counter />
       case 'applications':
         return <JobApplications />
-      case 'quotes':
-        return <div className="p-6">Quote Requests Component (To be implemented)</div>
       case 'quotations':
-        return <div className="p-6">Get a Quotation Component (To be implemented)</div>
+        return <div ><QuotationPage/></div>
       case 'testimonials':
-        return <div className="p-6">Testimonials Component (To be implemented)</div>
-      case 'services':
-        return <ServicesManagement />
-      case 'admin-actions':
-        return <div className="p-6">Admin Actions Component (To be implemented)</div>
+        return <div><TestimonialsPage/></div>
+      case 'getcontact':
+        return <GetContact />
+      case 'postcontact':
+        return <div ><ContactPostAdmin/></div>
       default:
         return <DashboardOverview />
     }
@@ -67,12 +73,12 @@ export default function Dashboard() {
   const getSectionTitle = () => {
     const titles: Record<string, string> = {
       overview: 'Dashboard Overview',
+      counter: 'Counter',
       applications: 'Job Applications',
-      quotes: 'Quote Requests',
       quotations: 'Get a Quotation',
       testimonials: 'Testimonials',
-      services: 'Services Management',
-      'admin-actions': 'Admin Actions',
+      contact: 'Contact Management',
+      'getcontact': 'postcontact',
     }
     return titles[activeSection] || 'Dashboard'
   }
@@ -82,7 +88,7 @@ export default function Dashboard() {
       <div className="flex h-screen w-full overflow-hidden">
 
         {/* Sidebar - responsive toggle */}
-        <div className="hidden md:block w-64 shrink-0 border-r bg-white">
+        <div className="hidden md:block w-54 shrink-0 border-r bg-white">
           <AdminSidebar
             activeSection={activeSection}
             onSectionChange={setActiveSection}
@@ -124,7 +130,7 @@ export default function Dashboard() {
           </header>
 
           {/* Main Content */}
-          <main className="flex-1 overflow-y-auto bg-muted/50 p-4 w-full">
+          <main className="flex-1 overflow-y-auto  p-4 w-full">
             {/* Optional title for mobile */}
             <h2 className="text-xl font-semibold mb-2 md:hidden">{getSectionTitle()}</h2>
 

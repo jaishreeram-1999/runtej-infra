@@ -28,8 +28,11 @@ export default function Navbar() {
       dropdown: [
         { label: "Iconic Projects", href: "/#iconic" },
         { label: "Residential Projects", href: "/residentialpage" },
+        { label: "Public Spaces", href: "/publicspaces" },
+         { label: "Transportation", href: "/transportation" },
         { label: "Commercial Projects", href: "/commercialpage" },
         { label: "Industrial Projects", href: "/industrialpage" },
+        
       ],
     },
     {

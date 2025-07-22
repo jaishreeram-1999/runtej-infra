@@ -1,168 +1,178 @@
 "use client"
 
-import * as React from "react"
-import {
-  BarChart3,
-  Building2,
-  FileText,
-  MessageSquare,
-  Quote,
-  Settings,
-  Home,
-  ChevronDown,
-  ChevronRight,
-} from "lucide-react"
+import type * as React from "react"
+import { BarChart3, Building2, FileText, Quote, Settings, Home, ChevronDown, Phone, Mail, Star } from "lucide-react"
 
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 interface AdminSidebarProps extends React.ComponentProps<typeof Sidebar> {
   activeSection: string
   onSectionChange: (section: string) => void
 }
 
+const menuItems = [
+  {
+    title: "Dashboard",
+    icon: Home,
+    id: "overview",
+  },
+  {
+    title: "Analytics",
+    icon: BarChart3,
+    id: "counter",
+  },
+  {
+    title: "Applications",
+    icon: FileText,
+    id: "applications",
+  },
+  {
+    title: "Quotations",
+    icon: Quote,
+    id: "quotations",
+  },
+  {
+    title: "Testimonials",
+    icon: Star,
+    id: "testimonials",
+  },
+  {
+    title: "Project Category",
+    icon: Star,
+    id: "project-category",
+  },
+]
+
+const contactItems = [
+  {
+    title: "Contact Queries",
+    icon: Mail,
+    id: "getcontact",
+  },
+  {
+    title: "Contact Settings",
+    icon: Settings,
+    id: "postcontact",
+  },
+]
+
 export function AdminSidebar({ activeSection, onSectionChange, ...props }: AdminSidebarProps) {
-  const [openDropdown, setOpenDropdown] = React.useState({
-    quotations: false,
-    management: false,
-  })
-
-  const toggleDropdown = (key: keyof typeof openDropdown) => {
-    setOpenDropdown((prev) => ({
-      ...prev,
-      [key]: !prev[key],
-    }))
-  }
-
-  const buttonBaseClass =
-    "w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-sm transition-all"
-  const itemBaseClass =
-    "w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all"
-
-  const getButtonStyle = (id: string) =>
-    activeSection === id
-      ? "bg-black text-white font-semibold"
-      : "bg-white text-black hover:bg-black hover:text-white"
-
   return (
-    <Sidebar {...props} className="h-screen">
-      <SidebarContent className="bg-green-400 text-white w-64">
+    <Sidebar variant="inset" {...props} className="" >
+      <SidebarHeader >
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton size="lg" asChild>
+              <div className="flex items-center gap-3">
+                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                  <Building2 className="size-4" />
+                </div>
+                <div className="grid flex-1 text-left text-sm leading-tight">
+                  <span className="truncate font-semibold">Admin Panel</span>
+                  <span className="truncate text-xs">Construction Co.</span>
+                </div>
+              </div>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarHeader>
+
+      <SidebarContent className="">
         <SidebarGroup>
-          <SidebarGroupLabel className="text-xl font-bold px-4 py-8 border-b border-[#000000] mb-4 text-white">
-            Admin Dashboard
-          </SidebarGroupLabel>
+          <SidebarGroupLabel>Main Menu</SidebarGroupLabel>
 
           <SidebarGroupContent>
             <SidebarMenu>
-              {/* Overview */}
-              <SidebarMenuItem>
-                <SidebarMenuButton
-                  isActive={activeSection === "overview"}
-                  onClick={() => onSectionChange("overview")}
-                  className={`${itemBaseClass} ${getButtonStyle("overview")}`}
-                >
-                  <Home className="w-5 h-5" />
-                  <span>Dashboard Overview</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
+              {menuItems.map((item) => (
+                <SidebarMenuItem key={item.id}>
+                  <SidebarMenuButton
+                    isActive={activeSection === item.id}
+                    onClick={() => onSectionChange(item.id)}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-md w-full ${activeSection === item.id ? 'bg-purple-200 text-purple-700' : 'hover:bg-blue-500 '
+                      }`}
+                  >
+                    <item.icon />
+                    <span>{item.title}</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
 
-              {/* Applications */}
-              <SidebarMenuItem>
-                <SidebarMenuButton
-                  isActive={activeSection === "applications"}
-                  onClick={() => onSectionChange("applications")}
-                  className={`${itemBaseClass} ${getButtonStyle("applications")}`}
-                >
-                  <FileText className="w-5 h-5" />
-                  <span>Job Applications</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
 
-              {/* Dropdown: Quotations */}
-              <SidebarMenuItem>
-                <button
-                  onClick={() => toggleDropdown("quotations")}
-                  className={`${buttonBaseClass} ${openDropdown.quotations ? "bg-black text-white" : "bg-white text-black hover:bg-black hover:text-white"}`}
-                >
-                  <span className="flex items-center gap-3">
-                    <BarChart3 className="w-5 h-5" />
-                    <span>Quotations</span>
-                  </span>
-                  {openDropdown.quotations ? <ChevronDown /> : <ChevronRight />}
-                </button>
+        </SidebarGroup>
 
-                {openDropdown.quotations && (
-                  <div className="mt-1 space-y-1 ml-4">
-                    <button
-                      onClick={() => onSectionChange("quotes")}
-                      className={`${itemBaseClass} ${getButtonStyle("quotes")}`}
-                    >
-                      Quote Requests
-                    </button>
-                    <button
-                      onClick={() => onSectionChange("quotations")}
-                      className={`${itemBaseClass} ${getButtonStyle("quotations")}`}
-                    >
-                      Get a Quotation
-                    </button>
-                  </div>
-                )}
-              </SidebarMenuItem>
-
-              {/* Testimonials */}
-              <SidebarMenuItem>
-                <SidebarMenuButton
-                  isActive={activeSection === "testimonials"}
-                  onClick={() => onSectionChange("testimonials")}
-                  className={`${itemBaseClass} ${getButtonStyle("testimonials")}`}
-                >
-                  <MessageSquare className="w-5 h-5" />
-                  <span>Testimonials</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-
-              {/* Dropdown: Management */}
-              <SidebarMenuItem>
-                <button
-                  onClick={() => toggleDropdown("management")}
-                  className={`${buttonBaseClass} ${openDropdown.management ? "bg-black text-white" : "bg-white text-black hover:bg-black hover:text-white"}`}
-                >
-                  <span className="flex items-center gap-3">
-                    <Settings className="w-5 h-5" />
-                    <span>Management</span>
-                  </span>
-                  {openDropdown.management ? <ChevronDown /> : <ChevronRight />}
-                </button>
-
-                {openDropdown.management && (
-                  <div className="mt-1 space-y-1 ml-4">
-                    <button
-                      onClick={() => onSectionChange("services")}
-                      className={`${itemBaseClass} ${getButtonStyle("services")}`}
-                    >
-                      Services Management
-                    </button>
-                    <button
-                      onClick={() => onSectionChange("admin-actions")}
-                      className={`${itemBaseClass} ${getButtonStyle("admin-actions")}`}
-                    >
-                      Admin Actions
-                    </button>
-                  </div>
-                )}
-              </SidebarMenuItem>
+        <SidebarGroup>
+          <SidebarGroupLabel>Contact Management</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <Collapsible
+                defaultOpen={activeSection === "getcontact" || activeSection === "postcontact"}
+                className="group/collapsible"
+              >
+                <SidebarMenuItem>
+                  <CollapsibleTrigger asChild>
+                    <SidebarMenuButton tooltip="Contact">
+                      <Phone />
+                      <span>Contact</span>
+                      <ChevronDown className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-180" />
+                    </SidebarMenuButton>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <SidebarMenuSub>
+                      {contactItems.map((subItem) => (
+                        <SidebarMenuSubItem key={subItem.id}>
+                          <SidebarMenuSubButton asChild isActive={activeSection === subItem.id}>
+                            <button onClick={() => onSectionChange(subItem.id)}>
+                              <subItem.icon />
+                              <span>{subItem.title}</span>
+                            </button>
+                          </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                      ))}
+                    </SidebarMenuSub>
+                  </CollapsibleContent>
+                </SidebarMenuItem>
+              </Collapsible>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+
+      <SidebarFooter >
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton size="lg" asChild>
+              <div className="flex items-center gap-3">
+                <Avatar className="h-8 w-8 rounded-lg">
+                  <AvatarImage src="/placeholder.svg?height=32&width=32" alt="Admin" />
+                  <AvatarFallback className="rounded-lg">AD</AvatarFallback>
+                </Avatar>
+                <div className="grid flex-1 text-left text-sm leading-tight">
+                  <span className="truncate font-semibold">Admin User</span>
+                  <span className="truncate text-xs">admin@company.com</span>
+                </div>
+              </div>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
     </Sidebar>
   )
 }

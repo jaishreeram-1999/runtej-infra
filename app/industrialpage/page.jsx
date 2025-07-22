@@ -4,16 +4,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 function industrialpage() {
-
-    const properties = [
-        { type: "Manufacturing plants and Factories", img: "/industrial/assembly plant.jpg", count: 12 },
-        { type: "Warehouses and distribution centres", img: "/industrial/warehouse.jpg", count: 8 },
-        { type: "Fabrication assembly plant", img: "/industrial/industrial.jpg", count: 15 },
-        { type: "Food and beverage processing plants", img: "/industrial/food-factory.jpg", count: 10 },
-        { type: "Heavy infrastructure and civil engineering projects", img: "/industrial/civil-engineer.jpg", count: 20 },
-        { type: "Water treatment and waste management facilities", img: "/industrial/water-plant.jpg", count: 5 },
-        { type: "Logistics and transportation hub", img: "/industrial/logistics.jpg", count: 6 },
-    ];
+const properties = [
+  { type: "PEB Shed Works", img: "/industrial/peb-shed.jpg", count: 4 },
+  { type: "Factories", img: "/industrial/factory.jpg", count: 9 },
+  { type: "Manufacturing Plants", img: "/industrial/manufacturing-plant.jpg", count: 12 },
+];
 
 
     return (

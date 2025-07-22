@@ -5,19 +5,18 @@ import Image from 'next/image';
 
 function commercialpage() {
     const properties = [
-        { type: "Religious Institutions - Temples, Gurudwaras", img: "/commercial/religious.jpg", count: 12 },
-        { type: "Hostels", img: "/commercial/hostal.jpg", count: 8 },
-        { type: "Community halls & Centers", img: "/commercial/community-hall.jpg", count: 15 },
-        { type: "Sports Facilities", img: "/commercial/sports.jpg", count: 10 },
-        { type: "Mixed - Use Developments", img: "/commercial/mixed.jpg", count: 20 },
-        { type: "Auditoriums", img: "/commercial/auditorium.jpg", count: 5 },
-        { type: "Office Buildings", img: "/commercial/office-building.jpg", count: 6 },
-        { type: "Retail Buildings", img: "/commercial/retail-building.jpg", count: 11 },
-        { type: "Hospitals & Clinics", img: "/commercial/hospital.jpg", count: 4 },
-        { type: "Schools & Training Centers", img: "/commercial/school.jpg", count: 7 },
-        { type: "Municipal Buildings", img: "/commercial/muncipal-building.jpg", count: 3 },
-        { type: "Restaurants", img: "/commercial/restaurent.jpg", count: 14 },
-    ];
+  { type: "Clinics & Pathologies", img: "/commercial/clinic-pathology.jpg", count: 6 },
+  { type: "Hospitals", img: "/commercial/hospital.jpg", count: 4 },
+  { type: "Restaurants", img: "/commercial/restaurant.jpg", count: 8 },
+  { type: "Hotels", img: "/commercial/hotel.jpg", count: 5 },
+  { type: "Marriage Halls and Gardens", img: "/commercial/marriage-hall.jpg", count: 3 },
+  { type: "Offices", img: "/commercial/office.jpg", count: 10 },
+  { type: "Corporate Buildings", img: "/commercial/corporate-building.jpg", count: 4 },
+  { type: "Commercial Buildings", img: "/commercial/commercial-building.jpg", count: 6 },
+  { type: "Convention Centers", img: "/commercial/convention-center.jpg", count: 2 },
+  { type: "IT Hubs", img: "/commercial/it-hub.jpg", count: 3 },
+]
+
 
     return (
         <div>

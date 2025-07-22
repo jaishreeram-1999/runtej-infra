@@ -39,20 +39,7 @@ function ProjectDetail() {
           </p>
         </div>
 
-        <div className="absolute bottom-10 right-4 md:right-16 text-white text-right space-y-2">
-          
-
-          {/* Icons */}
-          <div className="flex justify-end gap-4 text-base">
-            <FaHeart className="cursor-pointer" />
-            <FaShareAlt className="cursor-pointer" />
-            <FaPrint className="cursor-pointer" />
-          </div>
-          {/* Project Cost */}
-          <p className="text-sm md:text-base font-semibold">
-            Project Cost: $2.5 Million
-          </p>
-        </div>
+      
 
 
 
