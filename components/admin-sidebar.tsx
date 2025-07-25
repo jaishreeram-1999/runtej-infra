@@ -53,9 +53,19 @@ const menuItems = [
     id: "testimonials",
   },
   {
-    title: "Project Category",
+    title: "Property Category",
     icon: Star,
-    id: "project-category",
+    id: "propertycategory",
+  },
+   {
+    title: "Property Types",
+    icon: Star,
+    id: "propertytype",
+  },
+   {
+    title: "Property Detail",
+    icon: Star,
+    id: "propertydetail",
   },
 ]
 

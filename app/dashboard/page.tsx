@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button'
 import { AdminSidebar } from '@/components/admin-sidebar'
 import { DashboardOverview } from '@/components/admin/dashboard-overview'
 import { JobApplications } from '@/components/admin/job-applications'
-import { ServicesManagement } from '@/components/admin/services-management'
 import {
   SidebarProvider,
   SidebarTrigger,
@@ -22,10 +21,12 @@ import {
 } from '@/components/ui/breadcrumb'
 import Counter from '@/components/admin/milestone'
 import TestimonialsPage from '@/components/admin/testinomial'
-import { Quotation } from '@/lib/models/quotation'
 import QuotationPage from '@/components/admin/quotation'
 import GetContact from '@/components/admin/getcontact'
 import ContactPostAdmin from '@/components/admin/postcontact'
+import CategoryPage from '@/components/admin/category'
+import ProjectDetail from '@/components/admin/projectdetail'
+import ProjectTypesPage from '@/components/admin/project-types'
 
 export default function Dashboard() {
   const { data: session, status } = useSession()
@@ -53,18 +54,24 @@ export default function Dashboard() {
     switch (activeSection) {
       case 'overview':
         return <DashboardOverview />
-        case 'counter':
+      case 'counter':
         return <Counter />
       case 'applications':
         return <JobApplications />
       case 'quotations':
-        return <div ><QuotationPage/></div>
+        return <div ><QuotationPage /></div>
       case 'testimonials':
-        return <div><TestimonialsPage/></div>
+        return <div><TestimonialsPage /></div>
+      case 'propertycategory':
+        return <div><CategoryPage /></div>
+      case 'propertytype':
+        return <div><ProjectTypesPage /></div>
+      case 'propertydetail':
+        return <div><ProjectDetail /></div>
       case 'getcontact':
         return <GetContact />
       case 'postcontact':
-        return <div ><ContactPostAdmin/></div>
+        return <div ><ContactPostAdmin /></div>
       default:
         return <DashboardOverview />
     }
@@ -77,6 +84,9 @@ export default function Dashboard() {
       applications: 'Job Applications',
       quotations: 'Get a Quotation',
       testimonials: 'Testimonials',
+      propertycategory: 'Property Category',
+      propertytype: 'Property Type',
+      propertydetail: 'Property Detail',
       contact: 'Contact Management',
       'getcontact': 'postcontact',
     }
