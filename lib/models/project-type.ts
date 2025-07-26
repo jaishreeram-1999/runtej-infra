@@ -6,6 +6,7 @@ export interface IProjectType extends Document {
   slug: string
   category: mongoose.Types.ObjectId
   image?: string
+  propertyType?: string
   createdAt: Date
   updatedAt: Date
 }
@@ -30,6 +31,10 @@ const ProjectTypeSchema = new Schema<IProjectType>(
     image: {
       type: String,
       default: null,
+    },
+     propertyType: {
+      type: Schema.Types.ObjectId,
+      ref: "PropertyType", // 👈 THIS LINE IS REQUIRED
     },
   },
   {
