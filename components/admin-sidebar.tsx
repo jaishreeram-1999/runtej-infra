@@ -1,7 +1,7 @@
 "use client"
 
 import type * as React from "react"
-import { BarChart3, Building2, FileText, Quote, Settings, Home, ChevronDown, Phone, Mail, Star } from "lucide-react"
+import { BarChart3, Building2, FileText,  AppWindow , Quote, Settings, MessageCircle, Home, ChevronDown, LandPlot, Phone, Mail, Star } from "lucide-react"
 
 import {
   Sidebar,
@@ -33,17 +33,17 @@ const menuItems = [
     id: "overview",
   },
   {
-    title: "Analytics",
+    title: "Milestone",
     icon: BarChart3,
     id: "counter",
   },
   {
-    title: "Applications",
+    title: "Job Applications",
     icon: FileText,
     id: "applications",
   },
   {
-    title: "Quotations",
+    title: "Enquiries",
     icon: Quote,
     id: "quotations",
   },
@@ -54,17 +54,17 @@ const menuItems = [
   },
   {
     title: "Property Category",
-    icon: Star,
+    icon: AppWindow,
     id: "propertycategory",
   },
    {
     title: "Property Types",
-    icon: Star,
+    icon: MessageCircle,
     id: "propertytype",
   },
    {
     title: "Property Detail",
-    icon: Star,
+    icon: LandPlot,
     id: "propertydetail",
   },
 ]
