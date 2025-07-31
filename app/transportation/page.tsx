@@ -43,7 +43,7 @@ function TransportationPage() {
               colSpan = "md:col-span-2";
             }
 
-            const linkHref = `/transportation/${property.type.toLowerCase().replace(/\s+/g, "-")}`;
+            // const linkHref = `/transportation/${property.type.toLowerCase().replace(/\s+/g, "-")}`;
 
             return (
               <Link key={index} href="/projectcategory" className={`block w-full ${colSpan}`}>

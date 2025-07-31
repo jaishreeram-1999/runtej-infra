@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { milestoneSchema } from "@/lib/validation/milestoneSchema";
-import {connectDB} from "@/lib/mongodb";
+import { connectDB } from "@/lib/mongodb";
 import Milestone from "@/lib/models/milestone";
 
 // GET: fetch milestone
@@ -13,6 +13,7 @@ export async function GET() {
     }
     return NextResponse.json(latest, { status: 200 });
   } catch (error) {
+    console.error("GET milestone error:", error); // ✅ error is used
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
@@ -34,6 +35,7 @@ export async function PUT(req: NextRequest) {
 
     return NextResponse.json(updated, { status: 200 });
   } catch (error) {
+    console.error("PUT milestone error:", error); // ✅ error is used
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }

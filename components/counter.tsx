@@ -43,7 +43,7 @@ export default function Counter() {
   useEffect(() => {
     if (!milestoneData) return;
 
-    counterRef.current.forEach((el, i) => {
+    counterRef.current.forEach((el) => {
       if (!el) return;
       const target = Number(el.dataset.target);
       gsap.fromTo(

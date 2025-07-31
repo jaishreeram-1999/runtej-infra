@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 export default function ThirdSection() {
   const imageRef = useRef(null);
   const contentRef = useRef(null);
-  const floatingImage = useRef(null);
+  // const floatingImage = useRef(null);
 
   useEffect(() => {
     gsap.from(imageRef.current, {

@@ -46,6 +46,7 @@ function FormPage() {
         budget: "",
       });
     } catch (err) {
+      console.error("Submission error:", err);
       toast.error("Submission failed. Try again ❌");
     }
   }

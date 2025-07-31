@@ -45,7 +45,7 @@ const properties = [
               colSpan = "md:col-span-2";
             }
 
-            const linkHref = `/public-spaces/${property.type.toLowerCase().replace(/\s+/g, "-")}`;
+            // const linkHref = `/public-spaces/${property.type.toLowerCase().replace(/\s+/g, "-")}`;
 
             return (
               <Link key={index} href="/projectcategory" className={`block w-full ${colSpan}`}>

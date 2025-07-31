@@ -1,23 +1,47 @@
-// models/category.ts
-import mongoose, { Document, Schema, Model, models } from 'mongoose';
+import mongoose from "mongoose"
+import slugify from "slugify"
 
-// Define the TypeScript interface for a Category document
-export interface ICategory extends Document {
-  name: string;
-  slug: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-// Define the Mongoose schema
-const CategorySchema = new Schema<ICategory>(
+const CategorySchema = new mongoose.Schema(
   {
-    name: { type: String, required: true, unique: true },
-    slug: { type: String, required: true, unique: true },
+    name: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    description: {
+      type: String,    
+    },
+    icon: {
+      type: String,
+      required: true,
+    },
+    parentCategory: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+      default: null,
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
   },
-  { timestamps: true }
-);
+  {
+    timestamps: true,
+  }
+)
 
-// Export the model or use existing one to avoid recompilation error in Next.js
-export const Category: Model<ICategory> =
-  models.Category || mongoose.model<ICategory>('Category', CategorySchema);
+// Automatically generate slug before saving
+//validate hone se pahle
+CategorySchema.pre("validate", function (next) {
+  if (!this.slug && this.name) {
+    this.slug = slugify(this.name, { lower: true, strict: true })
+  }
+  next()
+})
+
+export const Category = mongoose.models.Category || mongoose.model("Category", CategorySchema)

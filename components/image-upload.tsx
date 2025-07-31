@@ -52,6 +52,7 @@ export function ImageUpload({ value, onChange, onRemove }: ImageUploadProps) {
         toast.error(result.error || "Failed to upload image")
       }
     } catch (error) {
+      console.error("Image upload error:", error)
       toast.error("Failed to upload image")
     } finally {
       setIsUploading(false)
