@@ -10,8 +10,6 @@ interface Category {
   parentCategory?: string | null; // 👈 add this line
 }
 
-
-
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [openDropdownIndex, setOpenDropdownIndex] = useState<number | null>(null);
@@ -29,13 +27,13 @@ export default function Navbar() {
       try {
         const res = await fetch("/api/admin/categories");
         const data = await res.json();
+        // console.log(data)
 
         // 👇 Filter categories with parentCategory === null
-        const parentCategories = (data.categories || []).filter(
+        const parentCategories = (data.allcategories || []).filter(
           (cat: Category) => cat.parentCategory === null
         );
-
-
+        // console.log("Parent Categories:", parentCategories);
         setProjectCategories(parentCategories);
       } catch (err) {
         console.error("Failed to load categories", err);

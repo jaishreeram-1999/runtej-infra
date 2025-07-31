@@ -1,6 +1,7 @@
-// app/projectdetail/[id]/page.tsx
-import React from "react"
-import { notFound } from "next/navigation"
+'use client'
+
+import React, { useEffect, useState } from "react"
+import { useParams, notFound, useRouter } from "next/navigation"
 import Image from "next/image"
 import { FaMapMarkerAlt } from "react-icons/fa"
 
@@ -28,24 +29,31 @@ interface Project {
   locationLink: string
 }
 
-async function getProject(id: string): Promise<Project | null> {
-  try {
-    const res = await fetch(`/api/admin/projectdetails/${id}`, {
-      cache: "no-store",
-    })
+export default function ProjectPage() {
+  const { id } = useParams()
+  const [project, setProject] = useState<Project | null>(null)
+  const [loading, setLoading] = useState(true)
 
-    if (!res.ok) return null
-    return await res.json()
-  } catch (err) {
-    console.error("Failed to load project:", err)
-    return null
-  }
-}
+  useEffect(() => {
+    const fetchProject = async () => {
+      try {
+        const res = await fetch(`/api/admin/projectdetails/${id}`, { cache: 'no-store' })
+        if (!res.ok) return setProject(null)
+        const data = await res.json()
+        setProject(data)
+      } catch (error) {
+        console.error("❌ Error loading project:", error)
+        setProject(null)
+      } finally {
+        setLoading(false)
+      }
+    }
 
-export default async function ProjectPage({ params }: { params: { id: string } }) {
-  const project = await getProject(params.id)
+    if (id) fetchProject()
+  }, [id])
 
-  if (!project) return notFound()
+  if (loading) return <p className="p-10 text-center">Loading...</p>
+  if (!project) return <p className="p-10 text-center">Project Not Found</p>
 
   return (
     <div>
@@ -124,7 +132,6 @@ export default async function ProjectPage({ params }: { params: { id: string } }
         </div>
       </div>
 
-      {/* Tabs section */}
       <TabsSection project={project} />
     </div>
   )

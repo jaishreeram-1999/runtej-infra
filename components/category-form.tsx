@@ -50,8 +50,8 @@ export function CategoryForm({ category, isEdit = false }: CategoryFormProps) {
         const response = await fetch("/api/admin/categories")
         if (response.ok) {
           const data = await response.json()
-          console.log("Fetched categories:", data.categories)
-          setCategories(data.categories.filter((cat: Category) => cat._id !== category?._id))
+          console.log("Fetched categories:", data.allcategories)
+          setCategories(data.allcategories.filter((cat: Category) => cat._id !== category?._id))
         }
       } catch (error) {
         console.error("Failed to fetch categories:", error)

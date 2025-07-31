@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { connectDB } from "@/lib/mongodb"
-import { Category } from "@/lib/models/category"
+import { Category } from "@/lib/models/Category"
 
 export async function GET(request: NextRequest) {
   try {
@@ -24,8 +24,11 @@ export async function GET(request: NextRequest) {
       .skip(skip)
       .limit(limit)
 
+    const allcategories = await Category.find(filter)
+    
     const total = await Category.countDocuments(filter)
     const totalPages = Math.ceil(total / limit)
+    // console.log("All Categories:", allcategories,total, totalPages, page, limit)
 
     return NextResponse.json({
       categories,
@@ -33,6 +36,7 @@ export async function GET(request: NextRequest) {
       totalPages,
       page,
       limit,
+      allcategories
     })
   } catch (error) {
     console.error("Error fetching categories:", error)

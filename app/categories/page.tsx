@@ -33,13 +33,13 @@ function CategoriesPage() {
         setLoading(true)
 
         const res = await axios.get<ApiResponse>("/api/admin/categories/")
-        console.log("All Categories:", res.data)
+        // console.log("All Categories:", res.data)
 
         // Filter top-level categories
         const topLevelCategories = res.data.categories.filter(
           (category) => category.parentCategory === null
         )
-        console.log("Top Level Categories:", topLevelCategories)
+        // console.log("Top Level Categories:", topLevelCategories)
 
         setCategories(topLevelCategories)
       } catch (error) {
