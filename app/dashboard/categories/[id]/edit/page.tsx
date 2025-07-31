@@ -33,7 +33,7 @@ export default function EditCategoryPage() {
         } else {
           throw new Error("Failed to fetch category")
         }
-      } catch {
+      } catch (error) {
         toast({
           title: "Error",
           description: "Failed to fetch category",

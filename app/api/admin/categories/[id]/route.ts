@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { connectDB } from "@/lib/mongodb"
-import { Category } from "@/lib/models/Category"
+import { Category } from "@/lib/models/category" // ✅ important fix for "category"
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
@@ -11,7 +11,6 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     }
     return NextResponse.json(category)
   } catch (error) {
-    console.error("Error fetching category:", error)
     return NextResponse.json({ error: "Failed to fetch category" }, { status: 500 })
   }
 }
@@ -46,7 +45,6 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
     }
     return NextResponse.json({ message: "Category deleted successfully" })
   } catch (error) {
-    console.error("Error deleting category:", error)
     return NextResponse.json({ error: "Failed to delete category" }, { status: 500 })
   }
 }

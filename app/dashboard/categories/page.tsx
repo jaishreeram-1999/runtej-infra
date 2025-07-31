@@ -2,8 +2,21 @@
 
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { Plus, Edit, Trash2, ImageIcon } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
@@ -26,40 +39,58 @@ interface Category {
 
 export default function CategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([])
+  const [parentOptions, setParentOptions] = useState<Category[]>([])
   const [loading, setLoading] = useState(true)
   const [page, setPage] = useState(1)
-  const [limit] = useState(10)
   const [totalPages, setTotalPages] = useState(1)
+  const [searchQuery, setSearchQuery] = useState("")
+  const [parentFilter, setParentFilter] = useState("")
+  const limit = 10
+  const { toast } = useToast()
+
   const [deleteDialog, setDeleteDialog] = useState<{
     open: boolean
     category: Category | null
   }>({ open: false, category: null })
 
-  const { toast } = useToast()
+  const fetchCategories = async () => {
+    setLoading(true)
+    try {
+      const queryParams = new URLSearchParams({
+        page: page.toString(),
+        limit: limit.toString(),
+      })
+      if (parentFilter) queryParams.append("parentCategory", parentFilter)
 
-  useEffect(() => {
-    const fetch = async () => {
-      setLoading(true)
-      try {
-        const response = await fetch(`/api/admin/categories?page=${page}&limit=${limit}`)
-        if (response.ok) {
-          const data = await response.json()
-          setCategories(data.categories)
-          setTotalPages(data.totalPages)
-        }
-      } catch {
-        toast({
-          title: "Error",
-          description: "Failed to fetch categories",
-          variant: "destructive",
-        })
-      } finally {
-        setLoading(false)
+      const response = await fetch(`/api/admin/categories?${queryParams.toString()}`)
+
+      if (response.ok) {
+        const data = await response.json()
+        setCategories(data.categories)
+        setTotalPages(data.totalPages)
       }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to fetch categories",
+        variant: "destructive",
+      })
+    } finally {
+      setLoading(false)
     }
+  }
 
-    fetch()
-  }, [page, limit, toast])
+  const fetchParentCategories = async () => {
+    try {
+      const response = await fetch("/api/admin/categories?page=1&limit=100")
+      if (response.ok) {
+        const data = await response.json()
+        setParentOptions(data.categories)
+      }
+    } catch (error) {
+      console.error("Failed to fetch parent categories", error)
+    }
+  }
 
   const handleDelete = async () => {
     if (!deleteDialog.category) return
@@ -74,11 +105,11 @@ export default function CategoriesPage() {
           title: "Success",
           description: "Category deleted successfully",
         })
-        setPage(1) // optional: reset to first page after delete
+        fetchCategories()
       } else {
         throw new Error("Failed to delete category")
       }
-    } catch {
+    } catch (error) {
       toast({
         title: "Error",
         description: "Failed to delete category",
@@ -88,6 +119,18 @@ export default function CategoriesPage() {
       setDeleteDialog({ open: false, category: null })
     }
   }
+
+  useEffect(() => {
+    fetchCategories()
+  }, [page, parentFilter])
+
+  useEffect(() => {
+    fetchParentCategories()
+  }, [])
+
+  const filteredCategories = categories.filter((category) =>
+    category.name.toLowerCase().includes(searchQuery.toLowerCase())
+  )
 
   if (loading) return <div>Loading...</div>
 
@@ -112,6 +155,33 @@ export default function CategoriesPage() {
           <CardDescription>A list of all categories in your store</CardDescription>
         </CardHeader>
         <CardContent>
+          {/* Filters */}
+          <div className="flex flex-col md:flex-row gap-4 mb-4 items-start md:items-center">
+            <input
+              type="text"
+              placeholder="Search by name..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="px-3 py-2 border border-gray-300 rounded-md w-full max-w-sm text-sm"
+            />
+
+            <select
+              value={parentFilter}
+              onChange={(e) => {
+                setPage(1)
+                setParentFilter(e.target.value)
+              }}
+              className="px-3 py-2 border border-gray-300 rounded-md text-sm"
+            >
+              <option value="">All Parent Categories</option>
+              {parentOptions.map((cat) => (
+                <option key={cat._id} value={cat._id}>
+                  {cat.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
           <Table>
             <TableHeader>
               <TableRow>
@@ -125,12 +195,12 @@ export default function CategoriesPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {categories.map((category) => (
+              {filteredCategories.map((category) => (
                 <TableRow key={category._id}>
                   <TableCell>
                     {category.icon ? (
                       <Image
-                        src={category.icon}
+                        src={category.icon || "/placeholder.svg"}
                         alt={category.name}
                         width={32}
                         height={32}
@@ -144,7 +214,6 @@ export default function CategoriesPage() {
                   </TableCell>
                   <TableCell className="font-medium">{category.name}</TableCell>
                   <TableCell>{category.description}</TableCell>
-
                   <TableCell>
                     {category.parentCategory ? (
                       <Badge variant="outline">{category.parentCategory.name}</Badge>
@@ -152,13 +221,11 @@ export default function CategoriesPage() {
                       <span className="text-muted-foreground">Root</span>
                     )}
                   </TableCell>
-
                   <TableCell>
                     <Badge variant={category.isActive ? "default" : "secondary"}>
                       {category.isActive ? "Active" : "Inactive"}
                     </Badge>
                   </TableCell>
-
                   <TableCell>{new Date(category.createdAt).toLocaleDateString()}</TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-2">
@@ -181,7 +248,7 @@ export default function CategoriesPage() {
             </TableBody>
           </Table>
 
-          {/* Pagination controls */}
+          {/* Pagination Controls */}
           <div className="flex justify-center gap-4 mt-6">
             <Button
               variant="outline"

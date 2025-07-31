@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { connectDB } from "@/lib/mongodb"
-import { Category } from "@/lib/models/Category"
+import { Category } from "@/lib/models/category"
 
 export async function GET(request: NextRequest) {
   try {
@@ -9,15 +9,22 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url)
     const page = parseInt(searchParams.get("page") || "1")
     const limit = parseInt(searchParams.get("limit") || "10")
+    const parentCategory = searchParams.get("parentCategory") // optional filter
     const skip = (page - 1) * limit
 
-    const categories = await Category.find()
+    const filter: any = {}
+
+    if (parentCategory) {
+      filter.parentCategory = parentCategory
+    }
+
+    const categories = await Category.find(filter)
       .populate("parentCategory", "name")
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit)
 
-    const total = await Category.countDocuments()
+    const total = await Category.countDocuments(filter)
     const totalPages = Math.ceil(total / limit)
 
     return NextResponse.json({
