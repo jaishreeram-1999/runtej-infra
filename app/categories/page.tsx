@@ -127,10 +127,7 @@ function CategoriesPage() {
 
                     <div className="absolute inset-0 bg-opacity-40 flex flex-col justify-end p-5 text-white">
                       <h3 className="text-lg sm:text-xl font-semibold mb-1">{category.name}</h3>
-                      {category.description && (
-                        <p className="text-xs sm:text-sm opacity-90 mb-2 line-clamp-2">{category.description}</p>
-                      )}
-                      <p className="text-xs sm:text-sm">View Subcategories →</p>
+                     
                     </div>
                   </div>
                 </Link>
